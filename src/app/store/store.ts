@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setReducer } from "../../common/components/Searchbar/reducers";
 
 export const store = configureStore({
   reducer: {
-
+    sets: setReducer,
   },
 });
 

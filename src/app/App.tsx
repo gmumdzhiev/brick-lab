@@ -1,11 +1,18 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Global } from "@emotion/react";
+import { TopBar } from "../common/components/Toolbar/Toolbar";
+import { Home } from "./screens/Home/Home";
 
 export const App = () => {
   return (
-    <div className="App">
-        Hey
-    </div>
+    <>
+      <Global styles={{ body: { background: "#d5eded" } }} />
+      <TopBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </>
   );
-}
-
+};

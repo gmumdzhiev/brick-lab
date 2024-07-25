@@ -17,3 +17,6 @@
   color: #61dafb;
 }
 
+:root {
+  --bs-gutter-x: 1.5rem;
+}
