@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { initialState } from '../initialSetState'
+import { initialState } from "../initialSetState";
 import { getLegoSet } from "../apiActions/getLegoSet";
 
 export const setSlice = createSlice({
@@ -8,15 +8,13 @@ export const setSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getLegoSet.pending, (state) => ({
-        ...state,
-        status: "loading",
-      }))
+      .addCase(getLegoSet.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(getLegoSet.fulfilled, (state, action) => {
         state.list = action.payload;
         state.status = "succeeded";
-
-        return state;
+        state.error = undefined;
       })
       .addCase(getLegoSet.rejected, (state, action) => {
         state.status = "failed";

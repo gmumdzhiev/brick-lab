@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TextField, InputAdornment, Container } from "@mui/material";
-import brickIcon from "../../../app/assets/icons/brick_icon.png";
-import { SearchBarWrapper, StyledIconButton } from "./style";
+import { SearchBarWrapper } from "./style";
 
 import { getLegoSet } from "./apiActions/getLegoSet";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
+import { ContainerSpacer } from "../../styles/style";
 
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -46,29 +46,27 @@ export const SearchBar = () => {
   };
 
   return (
-    <Container>
-      <SearchBarWrapper>
-        <p>Search for your set</p>
-        <TextField
-          id="set-search"
-          value={searchInput}
-          onChange={handleInputChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment disableTypography position="start">
-                #
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <StyledIconButton>
-                  <img src={brickIcon} alt="brick icon" />
-                </StyledIconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </SearchBarWrapper>
-    </Container>
+    <ContainerSpacer>
+      <Container>
+        <SearchBarWrapper>
+          <p>Search for your set</p>
+          <TextField
+            id="set-search"
+            value={searchInput}
+            onChange={handleInputChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment disableTypography position="start">
+                  #
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              background: "white",
+            }}
+          />
+        </SearchBarWrapper>
+      </Container>
+    </ContainerSpacer>
   );
 };

@@ -8,7 +8,7 @@ import { Home } from "./screens/Home/Home";
 export const App = () => {
   return (
     <>
-      <Global styles={{ body: { background: "#d5eded" } }} />
+      <Global styles={{ body: { background: "#f0ece4" } }} />
       <TopBar />
       <Routes>
         <Route path="/" element={<Home />} />
