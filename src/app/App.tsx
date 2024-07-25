@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-function App() {
+export const App = () => {
   return (
     <div className="App">
         Hey
@@ -9,4 +9,3 @@ function App() {
   );
 }
 
-export default App;
