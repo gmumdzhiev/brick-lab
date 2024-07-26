@@ -1,10 +1,50 @@
 import styled from "@emotion/styled";
-import { Card, Button, CardActions } from "@mui/material";
+import {
+  DetailedHTMLProps,
+  ImgHTMLAttributes,
+  AnchorHTMLAttributes,
+} from "react";
+import {
+  Card,
+  Button,
+  ButtonProps,
+  CardActions,
+  CardMedia,
+  CardMediaProps,
+} from "@mui/material";
+
+type ExtendedCardMediaProps = CardMediaProps &
+  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
+
+type ExtendedButtonProps = ButtonProps &
+  DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
+
+interface StyledButtonProps extends ExtendedButtonProps {
+  windowWidth: number;
+}
 
 export const StyledCard = styled(Card)<{ windowWidth: number }>`
   display: flex;
   justify-content: space-around;
 
+  flex-direction: ${({ windowWidth }) =>
+    windowWidth < 940 ? "column" : "row"};
+  justify-content: ${({ windowWidth }) =>
+    windowWidth < 940 ? "center" : "space-around"};
+  align-items: center;
+`;
+
+export const StyledCardMedia = styled(CardMedia)<ExtendedCardMediaProps>`
+  object-fit: contain;
+  padding: 16px;
+  max-width: 300px;
+  max-height: 150px;
+`;
+
+export const StyledEmptyCard = styled(Card)<{ windowWidth: number }>`
+  height: 300px;
+  display: flex;
+  justify-content: space-around;
   flex-direction: ${({ windowWidth }) =>
     windowWidth < 940 ? "column" : "row"};
   justify-content: ${({ windowWidth }) =>
@@ -19,7 +59,7 @@ export const StyledCardActions = styled(CardActions)<{ windowWidth: number }>`
     windowWidth < 768 ? "column" : "row"};
 `;
 
-export const StyledButton = styled(Button)<{ windowWidth: number }>`
+export const StyledButton = styled(Button)<StyledButtonProps>`
   background: #fcba03;
   color: #000;
   padding: 8px;

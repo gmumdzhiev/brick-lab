@@ -1,39 +1,41 @@
 import React from "react";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import { ContainerSpacer } from "../../styles/style";
-import { useAppSelector } from "../../utils/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/reduxHooks";
 import brickIcon from "../../../app/assets/icons/brick_icon.png";
 import linkIcon from "../../../app/assets/icons/link-icon.png";
 import {
   StyledButton,
   StyledCard,
   StyledCardActions,
+  StyledCardMedia,
   StyledIcon,
 } from "./style";
 import { useWindowDimensions } from "../../utils/hooks/useWindowDimensions";
+import { getLegoSetParts } from "../Searchbar/apiActions/getLegoSetParts";
 
 export const ProductCard = () => {
-  const setData = useAppSelector((state) => state.sets.list);
+  const dispatch = useAppDispatch();
   const { windowWidth } = useWindowDimensions();
+  const setData = useAppSelector((state) => state.sets.list);
+
+  const fetchRelatedSetParts = () => {
+    if (setData?.setNum) {
+      dispatch(getLegoSetParts(setData.setNum));
+    }
+  };
 
   return (
     <ContainerSpacer>
       <Container>
         {setData ? (
           <StyledCard windowWidth={windowWidth}>
-            <CardMedia
+            <StyledCardMedia
               component="img"
               alt={setData.name}
               width="200"
-              sx={{
-                objectFit: "contain",
-                padding: "16px",
-                maxWidth: "300px",
-                maxHeight: "150px",
-              }}
               image={setData.setImgUrl}
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -52,11 +54,18 @@ export const ProductCard = () => {
                 </Typography>
               </CardContent>
               <StyledCardActions windowWidth={windowWidth}>
-                <StyledButton href={setData.setUrl} windowWidth={windowWidth}>
+                <StyledButton
+                  onClick={fetchRelatedSetParts}
+                  windowWidth={windowWidth}
+                >
                   Show related parts
                   <StyledIcon src={brickIcon} alt="brick icon" />
                 </StyledButton>
-                <StyledButton href={setData.setUrl} windowWidth={windowWidth}>
+                <StyledButton
+                  href={setData.setUrl}
+                  target="_blank"
+                  windowWidth={windowWidth}
+                >
                   Navigate to rebrickable
                   <StyledIcon src={linkIcon} alt="link icon" />
                 </StyledButton>
@@ -64,9 +73,11 @@ export const ProductCard = () => {
             </div>
           </StyledCard>
         ) : (
-          <Typography variant="body2" color="text.secondary">
-            No set data available.
-          </Typography>
+          <StyledCard windowWidth={windowWidth}>
+            <Typography variant="body1" color="text.secondary">
+              No set data available. 🤷‍♂️
+            </Typography>
+          </StyledCard>
         )}
       </Container>
     </ContainerSpacer>

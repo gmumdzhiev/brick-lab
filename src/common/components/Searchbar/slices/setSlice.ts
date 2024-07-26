@@ -12,8 +12,8 @@ export const setSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getLegoSet.fulfilled, (state, action) => {
-        state.list = action.payload;
         state.status = "succeeded";
+        state.list = action.payload;
         state.error = undefined;
       })
       .addCase(getLegoSet.rejected, (state, action) => {

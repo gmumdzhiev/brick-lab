@@ -1,17 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ILegoSet, ILegoSetError } from "../interfaces/ILegoSet";
-import { legoSetTransformer } from "../transformers/legoSetTransformer";
+import { ILegoSetParts, ILegoSetPartsError } from "../interfaces/ILegoSetParts";
 import { responseNotOkReject } from "../../../utils/api/responseNotOkReject/responseNotOkReject";
+import { legoSetPartsTransformer } from "../transformers/legoSetPartsTransformer";
 import { errorStatusAndExceptionDefault } from "../../../utils/api/errorStatusAndExceptionDefault/errorStatusAndExceptionDefault";
 
-export const getLegoSet = createAsyncThunk<
-  ILegoSet,
+export const getLegoSetParts = createAsyncThunk<
+  ILegoSetParts,
   string,
-  { rejectValue: ILegoSetError }
->("legoSet/get", async (setNum, { rejectWithValue }) => {
+  { rejectValue: ILegoSetPartsError }
+>("legoSetParts/get", async (setNum, { rejectWithValue }) => {
   try {
     const response = await fetch(
-      `https://rebrickable.com/api/v3/lego/sets/${setNum}-1/?key=${process.env.REACT_APP_API_KEY}`,
+      `https://rebrickable.com/api/v3/lego/sets/${setNum}/parts/?key=${process.env.REACT_APP_API_KEY}`,
       {
         method: "GET",
         headers: { Authorization: `key ${process.env.REACT_APP_API_KEY}` },
@@ -20,19 +20,19 @@ export const getLegoSet = createAsyncThunk<
 
     if (!response.ok) {
       return rejectWithValue(
-        responseNotOkReject("GET sets", response.status)
+        responseNotOkReject("GET sets parts", response.status)
       );
     }
 
     const data = await response.json();
 
-    if (data.set_num) {
-      return legoSetTransformer(data);
+    if (data) {
+      return legoSetPartsTransformer(data);
     }
 
     return rejectWithValue(
       errorStatusAndExceptionDefault(
-        "Get sets",
+        "Get set parts",
         "fetch_error",
         response.status,
         "🙊"
