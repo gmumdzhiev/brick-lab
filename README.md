@@ -1,4 +1,4 @@
-![Brick Lab Logo](../brick-lab/src/app/assets/logo.jpg)
+![Brick Lab Logo](./src/app/assets/logo.jpg)
 # Custom LEGO Sets with Rebrickable API 🧱
 
 Welcome to our project! We're using the power of the Rebrickable API to customize LEGO sets. This project is built with React and Laravel. 
