@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { keyframes } from '@emotion/react'
+import { keyframes } from "@emotion/react";
 
 import { AppBar, Box } from "@mui/material";
 
@@ -21,11 +21,12 @@ const fadeInFromTop = keyframes`
   }
 `;
 
-
-export const StyledToolbar = styled(AppBar)`
-    background: #fff;
-`
+export const StyledToolbar = styled(AppBar)<{ windowWidth: number }>`
+  background: #feecbc;
+  justify-content: center;
+  padding: ${({ windowWidth }) => (windowWidth < 768 ? "8px" : "16px")};
+`;
 
 export const StyledSubContainer = styled(Box)`
-animation: 2s ${fadeInFromTop} ease-out 
+  animation: 2s ${fadeInFromTop} ease-out;
 `;

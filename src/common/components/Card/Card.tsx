@@ -15,8 +15,9 @@ import {
 } from "./style";
 import { useWindowDimensions } from "../../utils/hooks/useWindowDimensions";
 import { getLegoSetParts } from "../Searchbar/apiActions/getLegoSetParts";
+import { IProps } from "./IProps";
 
-export const ProductCard = () => {
+export const ProductCard = ({ setIsPartsShown }: IProps) => {
   const dispatch = useAppDispatch();
   const { windowWidth } = useWindowDimensions();
   const setData = useAppSelector((state) => state.sets.list);
@@ -24,6 +25,7 @@ export const ProductCard = () => {
   const fetchRelatedSetParts = () => {
     if (setData?.setNum) {
       dispatch(getLegoSetParts(setData.setNum));
+      setIsPartsShown(true);
     }
   };
 
