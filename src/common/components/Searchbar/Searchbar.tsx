@@ -5,6 +5,7 @@ import { SearchBarWrapper } from "./style";
 import { getLegoSet } from "./apiActions/getLegoSet";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { ContainerSpacer } from "../../styles/style";
+import { IProps } from "./IProps";
 
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -29,7 +30,7 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
-export const SearchBar = () => {
+export const SearchBar = ({ setIsPartsShown }: IProps) => {
   const [searchInput, setSearchInput] = useState<string>("");
   const dispatch = useAppDispatch();
 
@@ -38,8 +39,9 @@ export const SearchBar = () => {
   useEffect(() => {
     if (debouncedSearchInput) {
       dispatch(getLegoSet(debouncedSearchInput));
+      setIsPartsShown(false); 
     }
-  }, [debouncedSearchInput, dispatch]);
+  }, [debouncedSearchInput, dispatch, setIsPartsShown]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);

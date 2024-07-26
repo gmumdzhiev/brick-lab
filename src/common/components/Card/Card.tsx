@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
@@ -17,10 +17,16 @@ import { useWindowDimensions } from "../../utils/hooks/useWindowDimensions";
 import { getLegoSetParts } from "../Searchbar/apiActions/getLegoSetParts";
 import { IProps } from "./IProps";
 
-export const ProductCard = ({ setIsPartsShown }: IProps) => {
+export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
   const dispatch = useAppDispatch();
   const { windowWidth } = useWindowDimensions();
   const setData = useAppSelector((state) => state.sets.list);
+
+  useEffect(() => {
+    if (isPartsShown && setData?.setNum) {
+      dispatch(getLegoSetParts(setData.setNum));
+    }
+  }, [setData, isPartsShown, dispatch]);
 
   const fetchRelatedSetParts = () => {
     if (setData?.setNum) {

@@ -13,7 +13,7 @@ import {
   TypographyStrong,
 } from "./style";
 
-export const ProductParts: React.FC = () => {
+export const ProductParts = () => {
   const partsData = useAppSelector((state) => state.parts.list);
 
   const resultsCount = partsData?.results.length || 0;

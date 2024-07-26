@@ -8,8 +8,9 @@ export const Home = () => {
 
   return (
     <>
-      <SearchBar />
+      <SearchBar setIsPartsShown={setIsPartsShown} />
       <ProductCard
+        isPartsShown={isPartsShown}
         setIsPartsShown={setIsPartsShown}
       />
       {isPartsShown && <ProductParts />}
