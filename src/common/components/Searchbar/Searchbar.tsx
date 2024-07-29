@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TextField, InputAdornment, Container } from "@mui/material";
+import {
+  TextField,
+  InputAdornment,
+  Container,
+  Typography,
+} from "@mui/material";
 
 import { getLegoSet } from "./apiActions/getLegoSet";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
@@ -51,7 +56,7 @@ export const SearchBar = ({ setIsPartsShown }: IProps) => {
     <ContainerSpacer>
       <Container>
         <StyledCard>
-          <p>Search for your set</p>
+          <Typography>Search for your set</Typography>
           <TextField
             id="set-search"
             value={searchInput}

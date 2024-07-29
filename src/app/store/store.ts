@@ -3,11 +3,21 @@ import {
   setPartsReducer,
   setReducer,
 } from "../../common/components/Searchbar/reducers";
+import { loginReducer } from "../../common/components/Login/reducers";
+import {
+  createPartsListReducer,
+  partsReducer,
+  partsToListReducer,
+} from "../../common/components/Card/reducers";
 
 export const store = configureStore({
   reducer: {
     sets: setReducer,
     parts: setPartsReducer,
+    login: loginReducer,
+    partsList: partsReducer,
+    createdPartsList: createPartsListReducer,
+    partsToList: partsToListReducer,
   },
 });
 

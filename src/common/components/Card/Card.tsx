@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
+import { Container, Tooltip } from "@mui/material";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ContainerSpacer } from "../../styles/style";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/reduxHooks";
 import brickIcon from "../../../app/assets/icons/brick_icon.png";
-import linkIcon from "../../../app/assets/icons/link-icon.png";
 import {
   StyledButton,
   StyledCard,
@@ -17,11 +18,25 @@ import { useWindowDimensions } from "../../utils/hooks/useWindowDimensions";
 import { getLegoSetParts } from "../Searchbar/apiActions/getLegoSetParts";
 import { IProps } from "./IProps";
 import { resetParts } from "../Searchbar/slices/setPartsSlice";
+import { AddNewPart } from "./components/AddNewPart/AddNewPart";
+import { getPartsList } from "./apiActions/getPartsList";
+import { AddNewList } from "./components/AddNewList/AddNewList";
 
-export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
+export const ProductCard = ({
+  isPartsShown,
+  setIsPartsShown,
+  setIsListShown,
+}: IProps) => {
   const dispatch = useAppDispatch();
   const { windowWidth } = useWindowDimensions();
   const setData = useAppSelector((state) => state.sets.list);
+  const token = useAppSelector((state) => state.login.token?.userToken);
+  const partsList = useAppSelector(
+    (state) => state.partsList.partsList?.results
+  );
+
+  const [isAddPartOpen, setAddPartOpen] = useState(false);
+  const [isAddNewListOpen, setAddNewListOpen] = useState(false);
 
   useEffect(() => {
     if (isPartsShown && setData?.setNum) {
@@ -29,13 +44,33 @@ export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
     }
   }, [setData, isPartsShown, dispatch]);
 
+  useEffect(() => {
+    const userToken = token || localStorage.getItem("token");
+    if (userToken) {
+      dispatch(getPartsList({ userToken, page: 1, pageSize: 10 }));
+    }
+  }, [token, dispatch]);
+
+  useEffect(() => {
+    if (partsList && partsList.length > 0) {
+      setAddPartOpen(true);
+    }
+  }, [partsList]);
+
   const fetchRelatedSetParts = () => {
     if (setData?.setNum) {
       dispatch(resetParts());
       dispatch(getLegoSetParts({ setNum: setData.setNum }));
       setIsPartsShown(true);
+      setIsListShown(false);
     }
   };
+
+  const manageShownList = () => {
+    setIsPartsShown(false);
+    setIsListShown(true);
+  };
+
   return (
     <ContainerSpacer>
       <Container>
@@ -71,13 +106,38 @@ export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
                   <StyledIcon src={brickIcon} alt="brick icon" />
                 </StyledButton>
                 <StyledButton
-                  href={setData.setUrl}
-                  target="_blank"
+                  onClick={manageShownList}
                   windowWidth={windowWidth}
                 >
-                  Navigate to rebrickable
-                  <StyledIcon src={linkIcon} alt="link icon" />
+                  Show your lists
+                  <ListAltIcon />
                 </StyledButton>
+                {token && (
+                  <Tooltip
+                    title={
+                      partsList && partsList.length > 0
+                        ? "View your lists"
+                        : "Create a new list"
+                    }
+                  >
+                    <StyledButton
+                      windowWidth={windowWidth}
+                      onClick={() => {
+                        if (partsList && partsList.length > 0) {
+                          setAddPartOpen(true);
+                        } else {
+                          setAddNewListOpen(true);
+                        }
+                      }}
+                    >
+                      {partsList && partsList.length > 0 ? (
+                        <ListAltIcon />
+                      ) : (
+                        <AddCircleIcon />
+                      )}
+                    </StyledButton>
+                  </Tooltip>
+                )}
               </StyledCardActions>
             </div>
           </StyledCard>
@@ -88,6 +148,14 @@ export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
             </Typography>
           </StyledCard>
         )}
+        <AddNewPart
+          open={isAddPartOpen}
+          onClose={() => setAddPartOpen(false)}
+        />
+        <AddNewList
+          open={isAddNewListOpen}
+          onClose={() => setAddNewListOpen(false)}
+        />
       </Container>
     </ContainerSpacer>
   );
