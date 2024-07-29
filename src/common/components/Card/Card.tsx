@@ -16,6 +16,7 @@ import {
 import { useWindowDimensions } from "../../utils/hooks/useWindowDimensions";
 import { getLegoSetParts } from "../Searchbar/apiActions/getLegoSetParts";
 import { IProps } from "./IProps";
+import { resetParts } from "../Searchbar/slices/setPartsSlice";
 
 export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
   const dispatch = useAppDispatch();
@@ -24,17 +25,17 @@ export const ProductCard = ({ isPartsShown, setIsPartsShown }: IProps) => {
 
   useEffect(() => {
     if (isPartsShown && setData?.setNum) {
-      dispatch(getLegoSetParts(setData.setNum));
+      dispatch(getLegoSetParts({ setNum: setData.setNum }));
     }
   }, [setData, isPartsShown, dispatch]);
 
   const fetchRelatedSetParts = () => {
     if (setData?.setNum) {
-      dispatch(getLegoSetParts(setData.setNum));
+      dispatch(resetParts());
+      dispatch(getLegoSetParts({ setNum: setData.setNum }));
       setIsPartsShown(true);
     }
   };
-
   return (
     <ContainerSpacer>
       <Container>

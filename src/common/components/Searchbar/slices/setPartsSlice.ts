@@ -5,7 +5,13 @@ import { getLegoSetParts } from "../apiActions/getLegoSetParts";
 export const setPartsSlice = createSlice({
   name: "parts",
   initialState,
-  reducers: {},
+  reducers: {
+    resetParts: (state) => {
+      state.list = initialState.list;
+      state.status = initialState.status;
+      state.error = initialState.error;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getLegoSetParts.pending, (state) => {
@@ -13,7 +19,14 @@ export const setPartsSlice = createSlice({
       })
       .addCase(getLegoSetParts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.list = action.payload;
+        if (state.list && state.list.results) {
+          state.list.results = state.list.results.concat(
+            action.payload.results
+          );
+        } else {
+          state.list = action.payload;
+        }
+        state.list.next = action.payload.next;
       })
       .addCase(getLegoSetParts.rejected, (state, action) => {
         state.status = "failed";
@@ -22,4 +35,7 @@ export const setPartsSlice = createSlice({
   },
 });
 
-export default setPartsSlice.reducer
+export const { resetParts } = setPartsSlice.actions;
+
+
+export default setPartsSlice.reducer;

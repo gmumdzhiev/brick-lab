@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
+import { Card } from "@mui/material";
 
-export const SearchBarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+export const StyledCard = styled(Card)`
+  padding: 16px;
 `;

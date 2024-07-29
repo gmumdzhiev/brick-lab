@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TextField, InputAdornment, Container } from "@mui/material";
-import { SearchBarWrapper } from "./style";
 
 import { getLegoSet } from "./apiActions/getLegoSet";
 import { useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { ContainerSpacer } from "../../styles/style";
 import { IProps } from "./IProps";
+import { StyledCard } from "./style";
 
 const useDebounce = (value: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -39,7 +39,7 @@ export const SearchBar = ({ setIsPartsShown }: IProps) => {
   useEffect(() => {
     if (debouncedSearchInput) {
       dispatch(getLegoSet(debouncedSearchInput));
-      setIsPartsShown(false); 
+      setIsPartsShown(false);
     }
   }, [debouncedSearchInput, dispatch, setIsPartsShown]);
 
@@ -50,7 +50,7 @@ export const SearchBar = ({ setIsPartsShown }: IProps) => {
   return (
     <ContainerSpacer>
       <Container>
-        <SearchBarWrapper>
+        <StyledCard>
           <p>Search for your set</p>
           <TextField
             id="set-search"
@@ -67,7 +67,7 @@ export const SearchBar = ({ setIsPartsShown }: IProps) => {
               background: "white",
             }}
           />
-        </SearchBarWrapper>
+        </StyledCard>
       </Container>
     </ContainerSpacer>
   );

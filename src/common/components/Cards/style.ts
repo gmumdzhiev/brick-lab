@@ -12,6 +12,11 @@ import {
 type ExtendedButtonProps = ButtonProps &
   DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
+export const StyledSearchCard = styled(Card)`
+  padding: 16px;
+  margin: 1.5em 0;
+`;
+
 export const StyledCard = styled(Card)`
   max-width: 160px;
   padding: 16px;

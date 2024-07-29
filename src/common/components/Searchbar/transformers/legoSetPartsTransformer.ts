@@ -12,10 +12,10 @@ import {
 
 // Transformer for ExternalIdDetails
 const externalIdDetailsTransformer = (
-  apiDetails: IAPIExternalIdDetails
+  apiDetails: IAPIExternalIdDetails | undefined
 ): IExternalIdDetails => ({
-  extIds: apiDetails.ext_ids,
-  extDescrs: apiDetails.ext_descrs,
+  extIds: apiDetails?.ext_ids || [],
+  extDescrs: apiDetails?.ext_descrs || [],
 });
 
 // Transformer for Color
@@ -41,15 +41,14 @@ const partTransformer = (apiPart: IAPIPart): IPart => ({
   partUrl: apiPart.part_url,
   partImgUrl: apiPart.part_img_url,
   externalIds: {
-    BrickLink: apiPart.external_ids.BrickLink,
-    BrickOwl: apiPart.external_ids.BrickOwl,
-    Brickset: apiPart.external_ids.Brickset,
-    LDraw: apiPart.external_ids.LDraw,
-    LEGO: apiPart.external_ids.LEGO,
+    BrickLink: apiPart.external_ids.BrickLink || [],
+    BrickOwl: apiPart.external_ids.BrickOwl || [],
+    Brickset: apiPart.external_ids.Brickset || [],
+    LDraw: apiPart.external_ids.LDraw || [],
+    LEGO: apiPart.external_ids.LEGO || [],
   },
   printOf: apiPart.print_of,
 });
-
 // Transformer for Result
 const resultTransformer = (apiResult: IAPIResult): IResult => ({
   id: apiResult.id,

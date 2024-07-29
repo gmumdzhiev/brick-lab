@@ -4,19 +4,22 @@ import { responseNotOkReject } from "../../../utils/api/responseNotOkReject/resp
 import { legoSetPartsTransformer } from "../transformers/legoSetPartsTransformer";
 import { errorStatusAndExceptionDefault } from "../../../utils/api/errorStatusAndExceptionDefault/errorStatusAndExceptionDefault";
 
+interface GetLegoSetPartsParams {
+  setNum: string;
+  nextUrl?: string;
+}
+
 export const getLegoSetParts = createAsyncThunk<
   ILegoSetParts,
-  string,
+  GetLegoSetPartsParams,
   { rejectValue: ILegoSetPartsError }
->("legoSetParts/get", async (setNum, { rejectWithValue }) => {
+>("legoSetParts/get", async ({ setNum, nextUrl }, { rejectWithValue }) => {
   try {
-    const response = await fetch(
-      `https://rebrickable.com/api/v3/lego/sets/${setNum}/parts/?key=${process.env.REACT_APP_API_KEY}`,
-      {
-        method: "GET",
-        headers: { Authorization: `key ${process.env.REACT_APP_API_KEY}` },
-      }
-    );
+    const url = nextUrl || `https://rebrickable.com/api/v3/lego/sets/${setNum}/parts/?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { Authorization: `key ${process.env.REACT_APP_API_KEY}` },
+    });
 
     if (!response.ok) {
       return rejectWithValue(
