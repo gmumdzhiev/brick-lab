@@ -135,7 +135,7 @@ export const AddNewPart = ({ open, onClose }: IProps) => {
                     error={!!errors.quantity}
                     helperText={errors.quantity?.message}
                     InputProps={{
-                      inputProps: { min: 0 }, // Optional: Prevent negative numbers
+                      inputProps: { min: 0 }, 
                     }}
                     onChange={(e) =>
                       field.onChange(parseInt(e.target.value, 10))

@@ -13,7 +13,12 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import { useForm, Controller } from "react-hook-form";
 import logo from "../../../app/assets/logo.png";
-import { StyledBox, StyledImageLogo } from "./style";
+import {
+  StyledBox,
+  StyledButton,
+  StyledImageLogo,
+  StyledLogoutBox,
+} from "./style";
 import { getUserToken } from "./apiActions/getUserToken";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/reduxHooks";
 import { clearToken, setToken } from "./slices/loginSlice";
@@ -128,18 +133,18 @@ export const Login: React.FC<LoginProps> = ({ open, onClose }) => {
               </form>
             </>
           ) : (
-            <Box>
+            <StyledLogoutBox>
               <Typography variant="h6" gutterBottom>
                 You are logged in
               </Typography>
-              <Button
+              <StyledButton
                 variant="contained"
                 color="secondary"
                 onClick={handleLogout}
               >
                 Logout
-              </Button>
-            </Box>
+              </StyledButton>
+            </StyledLogoutBox>
           )}
         </CardContent>
       </Card>
