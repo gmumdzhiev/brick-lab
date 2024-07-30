@@ -48,6 +48,7 @@ export const AddNewList = ({ open, onClose }: IProps) => {
   const onSubmit = (data: IFormInput) => {
     const token = userToken as string;
     if (!token) {
+      // eslint-disable-next-line no-console
       console.error("User token is missing");
       setLoading(false);
       return;
@@ -62,6 +63,7 @@ export const AddNewList = ({ open, onClose }: IProps) => {
       })
       .catch((error) => {
         setLoading(false);
+        // eslint-disable-next-line no-console
         console.error("Failed to create parts list:", error);
       });
   };

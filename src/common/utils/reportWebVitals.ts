@@ -1,8 +1,8 @@
-import { Metric, onCLS, onFID, onLCP, onTTFB, onFCP } from 'web-vitals';
+import { Metric, onCLS, onFID, onLCP, onTTFB, onFCP } from "web-vitals";
 
 const reportWebVitals = () => {
   const reportHandler = (metric: Metric) => {
-    console.log(metric);
+    return metric;
   };
 
   onCLS(reportHandler);

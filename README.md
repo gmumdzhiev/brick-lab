@@ -1,7 +1,7 @@
 ![Brick Lab Logo](./src/app/assets/logo.jpg)
 # Custom LEGO Sets with Rebrickable API 🧱
 
-Welcome to our project! We're using the power of the Rebrickable API to customize LEGO sets. This project is built with React and Laravel. 
+Welcome to our project! We're using the power of the Rebrickable API to customize LEGO sets. This project is built with React and Typescript. 
 
 ## Project Description 📝
 
@@ -44,6 +44,8 @@ git clone <repository-url>
 4. **Start the Project**: Finally, you can start the project using the yarn start command. This will start the project in development mode. Open http://localhost:3000 to view it in the browser.
 
 ``` yarn start ```
+
+5. **REMINDER**: ⚠️ In order to create / have your own profile user list, you need to login with your existing account from Rebrickable
 
 That’s it! You should now have the project running locally on your machine. Happy coding! 🎉
 

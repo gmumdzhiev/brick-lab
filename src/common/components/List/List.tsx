@@ -16,7 +16,6 @@ import { useAppSelector, useAppDispatch } from "../../utils/hooks/reduxHooks";
 import { getPartsListDetails } from "../Card/apiActions/getPartsListDetails";
 import { ListDetails } from "./components/ListDetails/ListDetails";
 
-
 export const List = () => {
   const dispatch = useAppDispatch();
   const userToken =
@@ -31,6 +30,7 @@ export const List = () => {
     const token = userToken as string;
 
     if (!token) {
+      // eslint-disable-next-line no-console
       console.error("User token is missing");
       return;
     }
