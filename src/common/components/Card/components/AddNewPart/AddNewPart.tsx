@@ -1,4 +1,3 @@
-// AddNewPart.tsx
 import React, { useState } from "react";
 import {
   Card,
@@ -20,6 +19,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../utils/hooks/reduxHooks";
+import { IAddPartsToList } from "../../interfaces/IAddPartsToList";
 
 export const AddNewPart = ({ open, onClose }: IProps) => {
   const dispatch = useAppDispatch();
@@ -37,16 +37,18 @@ export const AddNewPart = ({ open, onClose }: IProps) => {
   const onSubmit = (data: IFormInput) => {
     const token = userToken as string;
 
+    const partsForApi: IAddPartsToList[] = [
+      {
+        partNum: data.part_num,
+        quantity: data.quantity,
+        colorId: parseInt(data.color_id, 10),
+      },
+    ];
+
     const params: AddPartsToListParams = {
       userToken: token,
       listId: parseInt(data.list_id, 10),
-      parts: [
-        {
-          partNum: data.part_num,
-          quantity: data.quantity,
-          colorId: parseInt(data.color_id, 10),
-        },
-      ],
+      parts: partsForApi,
     };
 
     if (!token) {
@@ -54,6 +56,7 @@ export const AddNewPart = ({ open, onClose }: IProps) => {
       setLoading(false);
       return;
     }
+
     setLoading(true);
     dispatch(addPartsToList(params))
       .unwrap()

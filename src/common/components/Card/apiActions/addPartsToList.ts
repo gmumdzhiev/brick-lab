@@ -5,6 +5,7 @@ import {
   IAPIAddPartsToList,
 } from "../interfaces/IAddPartsToList";
 import { addPartsToListTransformer } from "../transformers/addPartsToListTransformer";
+import { addPartsToListReverseTransformer } from "../transformers/addPartsToListReverseTransformer";
 
 export interface AddPartsToListParams {
   userToken: string;
@@ -13,7 +14,7 @@ export interface AddPartsToListParams {
 }
 
 export const addPartsToList = createAsyncThunk<
-  IAddPartsToList[], 
+  IAddPartsToList[],
   AddPartsToListParams,
   { rejectValue: IAddPartsToListError }
 >(
@@ -21,13 +22,15 @@ export const addPartsToList = createAsyncThunk<
   async ({ userToken, listId, parts }, { rejectWithValue }) => {
     try {
       const url = `https://rebrickable.com/api/v3/users/${userToken}/partlists/${listId}/parts/`;
+      const apiFormattedParts = addPartsToListReverseTransformer(parts);
       const response = await fetch(url, {
         method: "POST",
         headers: {
           Authorization: `key ${process.env.REACT_APP_API_KEY}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(parts),
+        // body: JSON.stringify(parts),
+        body: JSON.stringify(apiFormattedParts),
       });
 
       if (!response.ok) {
@@ -37,11 +40,10 @@ export const addPartsToList = createAsyncThunk<
         });
       }
 
-      const data: IAPIAddPartsToList[] = await response.json(); 
+      const data: IAPIAddPartsToList[] = await response.json();
       if (data) {
-        return addPartsToListTransformer(data); 
+        return addPartsToListTransformer(data);
       }
-
 
       return [];
     } catch (error) {
