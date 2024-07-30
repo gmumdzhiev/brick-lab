@@ -4,7 +4,6 @@ import {
   CardContent,
   Typography,
   TextField,
-  Button,
   Backdrop,
   CircularProgress,
   Box,
@@ -20,6 +19,7 @@ import {
   useAppSelector,
 } from "../../../../utils/hooks/reduxHooks";
 import { IAddPartsToList } from "../../interfaces/IAddPartsToList";
+import { StyledButton } from "./style";
 
 export const AddNewPart = ({ open, onClose }: IProps) => {
   const dispatch = useAppDispatch();
@@ -160,14 +160,14 @@ export const AddNewPart = ({ open, onClose }: IProps) => {
                 )}
               />
             </Box>
-            <Button
+            <StyledButton
               type="submit"
               variant="contained"
               color="primary"
               disabled={loading}
             >
               {loading ? <CircularProgress size={24} /> : "Submit"}
-            </Button>
+            </StyledButton>
           </form>
         </CardContent>
       </Card>

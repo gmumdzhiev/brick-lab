@@ -4,7 +4,6 @@ import {
   CardContent,
   Typography,
   TextField,
-  Button,
   Backdrop,
   CircularProgress,
   Box,
@@ -18,6 +17,8 @@ import {
   useAppSelector,
 } from "../../../../utils/hooks/reduxHooks";
 import { createPartsList } from "../../apiActions/createPartsList";
+import { getPartsList } from "../../apiActions/getPartsList";
+import { StyledButton } from "./style";
 
 interface IFormInput {
   isBuildable: boolean;
@@ -46,7 +47,6 @@ export const AddNewList = ({ open, onClose }: IProps) => {
 
   const onSubmit = (data: IFormInput) => {
     const token = userToken as string;
-
     if (!token) {
       console.error("User token is missing");
       setLoading(false);
@@ -56,6 +56,7 @@ export const AddNewList = ({ open, onClose }: IProps) => {
     dispatch(createPartsList({ userToken: token, ...data }))
       .unwrap()
       .then(() => {
+        dispatch(getPartsList({ userToken: token, page: 1, pageSize: 10 }));
         setLoading(false);
         onClose();
       })
@@ -130,14 +131,14 @@ export const AddNewList = ({ open, onClose }: IProps) => {
                 )}
               />
             </Box>
-            <Button
+            <StyledButton
               type="submit"
               variant="contained"
               color="primary"
               disabled={loading}
             >
               {loading ? <CircularProgress size={24} /> : "Submit"}
-            </Button>
+            </StyledButton>
           </form>
         </CardContent>
       </Card>

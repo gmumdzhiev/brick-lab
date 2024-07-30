@@ -29,7 +29,6 @@ export const addPartsToList = createAsyncThunk<
           Authorization: `key ${process.env.REACT_APP_API_KEY}`,
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(parts),
         body: JSON.stringify(apiFormattedParts),
       });
 

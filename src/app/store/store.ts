@@ -8,6 +8,7 @@ import {
   createPartsListReducer,
   partsReducer,
   partsToListReducer,
+  partsListDetailsReducer,
 } from "../../common/components/Card/reducers";
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     partsList: partsReducer,
     createdPartsList: createPartsListReducer,
     partsToList: partsToListReducer,
+    partsListDetails: partsListDetailsReducer,
   },
 });
 

@@ -26,6 +26,7 @@ interface StyledButtonProps extends ExtendedButtonProps {
 export const StyledCard = styled(Card)<{ windowWidth: number }>`
   display: flex;
   justify-content: space-around;
+  padding: 24px;
 
   flex-direction: ${({ windowWidth }) =>
     windowWidth < 940 ? "column" : "row"};

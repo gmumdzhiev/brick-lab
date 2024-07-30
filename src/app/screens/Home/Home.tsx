@@ -7,6 +7,9 @@ import { List } from "../../../common/components/List/List";
 
 export const Home = () => {
   const setData = useAppSelector((state) => state.sets.list);
+  const userToken =
+    useAppSelector((state) => state.login.token?.userToken) ||
+    localStorage.getItem("token");
   const [isPartsShown, setIsPartsShown] = useState<boolean>(false);
   const [isListShown, setIsListShown] = useState<boolean>(false);
   return (
@@ -18,7 +21,7 @@ export const Home = () => {
         setIsListShown={setIsListShown}
       />
       {isPartsShown && <ProductParts key={setData?.setNum} />}
-      {isListShown && <List/>}
+      {isListShown && userToken && <List />}
     </>
   );
 };

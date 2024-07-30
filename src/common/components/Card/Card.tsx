@@ -3,6 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Container, Tooltip } from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ContainerSpacer } from "../../styles/style";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/reduxHooks";
@@ -51,11 +52,6 @@ export const ProductCard = ({
     }
   }, [token, dispatch]);
 
-  useEffect(() => {
-    if (partsList && partsList.length > 0) {
-      setAddPartOpen(true);
-    }
-  }, [partsList]);
 
   const fetchRelatedSetParts = () => {
     if (setData?.setNum) {
@@ -105,18 +101,21 @@ export const ProductCard = ({
                   Show related parts
                   <StyledIcon src={brickIcon} alt="brick icon" />
                 </StyledButton>
-                <StyledButton
-                  onClick={manageShownList}
-                  windowWidth={windowWidth}
-                >
-                  Show your lists
-                  <ListAltIcon />
-                </StyledButton>
+                {token && (
+                  <StyledButton
+                    onClick={manageShownList}
+                    windowWidth={windowWidth}
+                  >
+                    Show your lists
+                    <ListAltIcon sx={{ marginLeft: "10px" }} />
+                  </StyledButton>
+                )}
+
                 {token && (
                   <Tooltip
                     title={
                       partsList && partsList.length > 0
-                        ? "View your lists"
+                        ? "Add part to your lists"
                         : "Create a new list"
                     }
                   >
@@ -131,7 +130,7 @@ export const ProductCard = ({
                       }}
                     >
                       {partsList && partsList.length > 0 ? (
-                        <ListAltIcon />
+                        <PlaylistAddIcon />
                       ) : (
                         <AddCircleIcon />
                       )}
